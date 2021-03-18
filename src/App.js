@@ -1,6 +1,8 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 import { AuthContext } from './firebase/auth';
+import { getVehicles } from './firebase/firestore';
+
 import './App.css';
 
 // 0. Instalar Firebase npm i firebase ✅
@@ -10,13 +12,21 @@ import './App.css';
 // 3. Hacer logout con un usuario logeado ✅
 // 4. Gestionar todo el flow de autenticación con un hook
 
-const email = 'pepito22@pepito.es';
+const email = 'cristian@thebridgeschool.es';
 const password = '123456';
 
 function App() {
-  const { user, handleLogout, handleRegister, handleLogin } = useContext(
-    AuthContext
-  );
+  const {
+    user,
+    handleLogout,
+    handleRegister,
+    handleLogin,
+    handleGoogleSignin,
+  } = useContext(AuthContext);
+
+  useEffect(() => {
+    getVehicles();
+  }, []);
 
   return (
     <div className="App">
@@ -38,6 +48,8 @@ function App() {
           <button onClick={() => handleLogin(email, password)}>
             Logear usuario
           </button>
+          <br />
+          <button onClick={handleGoogleSignin}>Entrar con Google</button>
         </div>
       )}
     </div>

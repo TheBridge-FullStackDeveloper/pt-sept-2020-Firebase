@@ -63,6 +63,22 @@ export const FirebaseAuthProvider = ({ children }) => {
     firebase.auth().signOut();
   }
 
+  // https://firebase.google.com/docs/auth/web/google-signin?hl=es
+  function handleGoogleSignin() {
+    const googleProvider = new firebase.auth.GoogleAuthProvider();
+    firebase
+      .auth()
+      .signInWithPopup(googleProvider)
+      .then((result) => {
+        // Desde este .then podemos hacer calculos adicionales con los tokens o el perfil del user
+        const { profile } = result.additionalUserInfo;
+        console.log(profile.name, profile.picture);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -70,6 +86,7 @@ export const FirebaseAuthProvider = ({ children }) => {
         handleRegister,
         handleLogin,
         handleLogout,
+        handleGoogleSignin,
       }}
     >
       {children}

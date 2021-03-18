@@ -9,6 +9,7 @@ import { FirebaseAuthProvider } from './firebase/auth';
 
 ReactDOM.render(
   <React.StrictMode>
+    {/* HOC High Order Component */}
     <FirebaseAuthProvider>
       <App />
     </FirebaseAuthProvider>
